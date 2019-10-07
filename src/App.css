@@ -1,22 +1,28 @@
-.App {
-  text-align: center;
+/* div{
+    border: thin red dotted;
+} */
+
+#logo{
+    font-family: 'Mansalva';
+    font-size: 26pt;
 }
 
-.App-logo {
-  height: 40vmin;
+.webname{
+    font-family: 'Mansalva';
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.col{
+    margin-top: 20px;
 }
 
-.App-link {
-  color: #09d3ac;
+.btn-group{
+    margin-top: 40px;
+}
+
+.card-body{
+    margin-top: 60px;
+}
+
+.mycard{
+    margin-top: 40px !important;
 }
