@@ -7,7 +7,7 @@ const NavBar = () => {
 			<div className='nav-wrapper black'>
 				<ul id='nav' className='left'>
 					<li>
-						<Link id='logo' to='/'>
+						<Link id='logo' to='/' >
 							Whisper
 						</Link>
 					</li>

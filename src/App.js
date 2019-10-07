@@ -13,6 +13,8 @@ import Myposts from './components/posts/Myposts'
 import Posts from './components/posts/Posts'
 import Addpost from './components/posts/AddPost'
 
+import PostState from './context/Posts/Poststate'
+
 function App() {
 	useEffect(() => {
 		console.log('hi');
@@ -21,6 +23,7 @@ function App() {
 
 	return (
 		<div className='App'>
+			<PostState>
 			<Router>
 				<Navbar />
 				<Switch>
@@ -31,7 +34,8 @@ function App() {
 					<Route path="/myposts" exact component={Myposts} />
 					<Route path="/addpost" exact component={Addpost} />
 				</Switch>
-			</Router>
+				</Router>
+			</PostState>
 		</div>
 	)
 }
