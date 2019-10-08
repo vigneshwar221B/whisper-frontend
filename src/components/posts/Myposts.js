@@ -1,16 +1,28 @@
-import React, {useContext} from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Post from './Post'
-import postContext from '../../context/Posts/postContext'
+import authContext from '../../context/Auth/authContext'
+import axios from 'axios'
 
 const Myposts = () => {
-    const mypostsContext = useContext(postContext)
+	const { loadUser } = useContext(authContext)
+	const [allposts, setallposts] = useState([])
 
-    return (
-        <div>
-            my posts:
-            <Post data={mypostsContext.state}/>
-        </div>
-    )
+	useEffect(() => {
+		//console.log('loaded')
+		loadUser()
+		axios
+			.get('http://localhost:8080/api/myposts')
+			.then(res => setallposts(res.data))
+			.catch(err => console.log(err))
+		// eslint-disable-next-line
+	}, [])
+
+	return (
+		<div>
+			<blockquote><h4>my posts:</h4></blockquote>
+			<Post data={allposts} />
+		</div>
+	)
 }
 
 export default Myposts

@@ -1,6 +1,37 @@
-import React from 'react'
+import React, {useContext, useState, useEffect} from 'react'
+import authContext from '../../context/Auth/authContext'
 
-const Register = () => {
+const Register = (props) => {
+
+	const {register, isAuthenticated} = useContext(authContext)
+
+	const [state, setstate] = useState({
+		name: '',
+		email: '',
+		password: ''
+	})
+
+	const onsubmit = e => {
+		e.preventDefault()
+		console.log('submitted');
+
+		register(state);
+	}
+
+	const onchange = e => {
+		setstate({
+			...state,
+			[e.target.name]: e.target.value
+		})
+	}
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			props.history.push('/home');
+		}
+		//eslint-disable-next-line
+	}, [isAuthenticated])
+
 	return (
 		<div className='container'>
 			<div className='row'>
@@ -8,22 +39,27 @@ const Register = () => {
 				<div className='col m6'>
 					<h2 className='center-align'>register</h2>
 					<div className='row'>
-						<form className='col s12'>
+						<form className='col s12' onSubmit={onsubmit}>
 							<div className='row'>
 								<div className='input-field col s12'>
-									<input id='name' type='text'></input>
+									<input id='name' value={state.name}
+										onChange={onchange}
+										name="name" type='text'
+										autoComplete="new-password"></input>
 									<label htmlFor='name'>Username</label>
 								</div>
 							</div>
 							<div className='row'>
 								<div className='input-field col s12'>
-									<input id='email' type='email'></input>
+									<input id='email' onChange={onchange}
+										value={state.email} name="email" type='email' autoComplete="new-password"></input>
 									<label htmlFor='email'>Email</label>
 								</div>
 							</div>
 							<div className='row'>
 								<div className='input-field col s12'>
-									<input id='pass' type='password' className='validate' />
+									<input id='pass' onChange={onchange}
+										value={state.password} name="password" type='password' className='validate' autoComplete="new-password" />
 									<label htmlFor='pass'>Password</label>
 								</div>
 							</div>
@@ -33,6 +69,8 @@ const Register = () => {
 										id='confirmpass'
 										type='password'
 										className='validate'
+										autoComplete="new-password"
+										name="cpassword"
 									/>
 									<label htmlFor='confirmpass'>confirmPassword</label>
 								</div>
@@ -43,7 +81,6 @@ const Register = () => {
 									<p className='right-align'>
 										<button
 											className='btn btn-large waves-effect waves-light black'
-											type='button'
 											name='action'
 										>
 											Register

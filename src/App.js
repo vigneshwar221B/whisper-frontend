@@ -12,30 +12,36 @@ import Register from './components/Auth/Register'
 import Myposts from './components/posts/Myposts'
 import Posts from './components/posts/Posts'
 import Addpost from './components/posts/AddPost'
+import PrivateRoute from './components/routing/PrivateRoute';
 
-import PostState from './context/Posts/Poststate'
+import AuthState from './context/Auth/AuthState'
 
-function App() {
+import setAuthToken from './utils/setAuthToken'
+
+if (localStorage.token) {
+	setAuthToken(localStorage.token)
+}
+
+const App = () => {
 	useEffect(() => {
-		console.log('hi');
 		M.AutoInit()
 	}, [])
 
 	return (
 		<div className='App'>
-			<PostState>
-			<Router>
-				<Navbar />
-				<Switch>
-					<Route path="/" exact component={Main} />
-					<Route path="/login" exact component={Login}/>
-					<Route path="/register" exact component={Register} />
-					<Route path="/home" exact component={Posts} />
-					<Route path="/myposts" exact component={Myposts} />
-					<Route path="/addpost" exact component={Addpost} />
-				</Switch>
+			<AuthState>
+				<Router>
+					<Navbar />
+					<Switch>
+						<Route path='/' exact component={Main} />
+						<Route path='/login' exact component={Login} />
+						<Route path='/register' exact component={Register} />
+						<Route path='/home' exact component={Posts} />
+						<PrivateRoute path='/myposts' exact component={Myposts} />
+						<PrivateRoute path='/addpost' exact component={Addpost} />
+					</Switch>
 				</Router>
-			</PostState>
+			</AuthState>
 		</div>
 	)
 }

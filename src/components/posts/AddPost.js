@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react'
-import postContext from '../../context/Posts/postContext'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 const AddPost = props => {
-
 	const [post, setpost] = useState({
-		nickname: '',
-		desc: ''
+		name: '',
+		desc: '',
+		by: ''
 	})
-	const postcontext = useContext(postContext)
 
 	const onchange = e => {
 		e.preventDefault()
@@ -20,9 +19,19 @@ const AddPost = props => {
 	const onsubmit = e => {
 		e.preventDefault()
 		console.log('form submitted')
+		//post to the server
+		const config = {
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}
 
-		postcontext.addFunc(post)
-		props.history.push('/myposts')
+		axios
+			.post('http://localhost:8080/api/addpost', post, config)
+			.then(() => {
+				props.history.push('/myposts')
+			})
+			.catch(err => console.log(err))
 	}
 
 	return (
@@ -35,13 +44,25 @@ const AddPost = props => {
 							<div className='row'>
 								<div className='input-field col s12'>
 									<textarea
-										id='nickname'
+										id='by'
 										className='materialize-textarea'
-										name='nickname'
-										value={post.nickname}
+										name='by'
+										value={post.by}
 										onChange={onchange}
 									></textarea>
-									<label htmlFor='nickname'>Nickname</label>
+									<label htmlFor='by'>Nickname</label>
+								</div>
+							</div>
+							<div className='row'>
+								<div className='input-field col s12'>
+									<textarea
+										id='name'
+										className='materialize-textarea'
+										name='name'
+										value={post.name}
+										onChange={onchange}
+									></textarea>
+									<label htmlFor='name'>name</label>
 								</div>
 							</div>
 
